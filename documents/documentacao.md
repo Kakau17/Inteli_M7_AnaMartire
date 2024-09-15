@@ -120,6 +120,56 @@
 
 <br>
 
+#### Semana 6
+##### Diagrama de Entidade e Relacionamento
+
+&emsp;&emsp;Um Diagrama de Entidade-Relacionamento (DER) é uma representação visual que descreve como diferentes entidades em um banco de dados se relacionam entre si. Cada entidade, que pode representar uma tabela em um banco de dados, é mostrada como um retângulo contendo seus atributos, como chaves primárias e outros campos importantes. As conexões entre essas entidades, chamadas de relacionamentos, são representadas por losangos ou linhas que ligam as entidades e podem descrever como elas interagem, por exemplo, se uma entidade está associada a outra em uma relação de **um para um** (1:1), **um para muitos** (1:N), ou **muitos para muitos** (N:N).
+
+&emsp;&emsp;Para a atividade ponderada, foi necessário desenvolver um DER para as 4 tabelas que a G2 Tecnologia nos enviou no começo do módulo. Essas tabelas são:
+
+- **OCRB** -- possui os dados bancários dos PNs
+- **OCRD** -- possui informações sobre os PNs
+- **CRD1** -- possui os endereços dos PNs
+- **CRD7** -- possui informações fiscais dos PNs
+
+&emsp;&emsp;O DER de cada tabela (contendo, também, suas ligações) foi desenvolvido em dois programas diferentes: *draw.io* e *SQL Designer*. A versão no *SQL Designer* está em formato `.xml` na pasta `documents` desse repositório, com o nome "AtividadePonderada_S6.xml". Já a versão no *draw.io*, que é exatamente igual, pode ser vista na imagem abaixo.
+
+<div align="center">
+<sub>Figura 7 - DER - Tabelas OCRB, OCRD, CRD1 e CRD7</sub>
+<img src="../assets/imagens/DER_AtividadePonderada_M7_S6-Page-1.drawio.png" width="100%" >
+<sup>Fonte: Material produzido pelos autores (2024)</sup>
+</div>
+<br>
+
+&emsp;&emsp;A tabela OCRB é o ponto central do DER, pois todas as outras tabelas se conectam a ela por meio de chaves estrangeiras (ou *Foreign Keys*). Cada tabela que armazena informações complementares sobre os parceiros de negócios (PNs), como endereços, informações fiscais e detalhes dos PNs, se relaciona diretamente com a OCRB. A chave primária de OCRB é `CardCode`, que também funciona como chave estrangeira nas demais tabelas, estabelecendo as relações entre as contas bancárias e os dados adicionais dos parceiros.
+
+&emsp;&emsp;A tabela OCRD está ligada à OCRB por meio de `CardCode`, seguindo uma relação de **1:N**, onde um parceiro pode ter várias contas bancárias.
+
+&emsp;&emsp;A tabela CRD1 está ligada à OCRB por meio de `CardCode`, seguindo uma relação de **1:N**, onde uma conta bancária pode estar associada a vários endereços. Isso permite que uma única conta bancária tenha múltiplos locais de correspondência ou operação, como escritórios e filiais de um parceiro de negócios.
+
+&emsp;&emsp;A tabela CRD7 (informações fiscais dos PNs) também está ligada à OCRB por meio de `CardCode`, e também em uma relação de **1:N**, onde uma conta bancária pode ter várias informações fiscais associadas. Isso é útil para armazenar diferentes números de identificação fiscal ou dados regulamentares vinculados a uma única conta bancária.
+
+&emsp;&emsp;É importante notar, que nas tabelas CRD1 e CRD7 foi necessário adicionar novas colunas, sendo elas `Id_CDR1`para a primeira tabela, e `Id_CDR7`para a segunda. Isso se deve ao fato de que não seria possível criar uma chave primária caso essas colunas não existissem, pois uma chave primária deve garantir a unicidade de cada registro na tabela. Ou seja, cada valor na chave primária deve ser único, não permitindo duplicidades. No caso das tabelas CRD1 e CRD7, como nenhum campo existente possuía essa característica, a criação das colunas `Id_CRD1` e `Id_CRD7` como chaves primárias artificiais foi essencial para garantir que cada linha tivesse um identificador único.
+
+<br>
+
+&emsp;&emsp;Além de desenvolver esse DER, também foi necessário definir corretamente as Relações de Cardinalidade entre as tabelas. A cardinalidade descreve como uma entidade (ou tabela) se relaciona com outra em termos de quantidade de registros. Essa relação pode ser vista na imagem abaixo.
+
+<div align="center">
+<sub>Figura 8 - Cardialidade - Tabelas OCRB, OCRD, CRD1 e CRD7</sub>
+<img src="../assets/imagens/Cardialidade_AtividadePonderada_M7_S6-Página-2.drawio.png" width="100%" >
+<sup>Fonte: Material produzido pelos autores (2024)</sup>
+</div>
+<br>
+
+&emsp;&emsp;A relação entre OCRD e OCRB foi estabelecida como 1 mandatory to Many optional, ou **1:N**, o que significa que um parceiro obrigatoriamente deve ter pelo menos uma conta bancária associada, enquanto uma conta bancária pode ou não estar vinculada a um parceiro.
+
+&emsp;&emsp;A relação entre OCRB e CRD1 segue o padrão 1 mandatory to Many optional, **1:N**, indicando que uma conta bancária precisa obrigatoriamente ter um endereço associado, mas um endereço pode existir sem estar vinculado a uma conta bancária.
+
+&emsp;&emsp;Já a relação entre OCRB e CRD7 foi estabelecida como 1 optional to Many mandatory (também **1:N**, mas diferente das anteriores), significando que uma conta bancária pode ou não ter informações fiscais associadas, porém, as informações fiscais devem estar obrigatoriamente associadas a múltiplas contas bancárias.
+
+<br>
+
 #### Referências
 [**1**] Successful ERP Implementation Case Study: Schlumberger and Scrum Inc. [s.l: s.n.]. Disponível em: <https://www.scruminc.com/wp-content/uploads/2019/06/Successful-ERP-Implentation-1.pdf>.
 
